@@ -1,0 +1,51 @@
+ID: P001
+Name: Venom: Den khi cai chet chia lia doi ta
+Date: Monday 18
+Date: Tuesday 19
+Date: Wednesday 19
+Cinema: Penang - Queensbay Mall
+Time: 01:40 PM
+Time: 05:50 PM
+Time: 08:30 PM
+Cinema: Penang -  Sunway Carniva
+Time: 01:40 PM
+Time: 04:30 PM
+Time: 08:10 PM
+Cinema: Alor Setar - Amen Central
+Time: 01:40 PM
+Time: 08:10 PM
+Image: C:\\Users\\PC\\Downloads\\venom.png
+ID: P002
+Name: The Substance: Than duoc
+Date: Monday 18
+Date: Tuesday 19
+Date: Wednesday 19
+Cinema: Penang - Queensbay Mall
+Time: 01:40 PM
+Time: 05:50 PM
+Time: 08:10 PM
+Cinema: Penang -  Sunway Carniva
+Time: 01:40 PM
+Time: 04:30 PM
+Time: 08:10 PM
+Cinema: Alor Setar - Amen Central
+Time: 01:40 PM
+Time: 08:10 PM
+Image: C:\\Users\\PC\\Downloads\\TheSubtance.png
+ID: P003
+Name: Ai oan trong vuon xuan
+Date: Monday 18
+Date: Tuesday 19
+Date: Wednesday 19
+Cinema: Penang - Queensbay Mall
+Time: 01:40 PM
+Time: 05:50 PM
+Time: 08:10 PM
+Cinema: Penang -  Sunway Carniva
+Time: 01:40 PM
+Time: 04:30 PM
+Time: 08:10 PM
+Cinema: Alor Setar - Amen Central
+Time: 01:40 PM
+Time: 08:10 PM
+Image: C:\\Users\\PC\\Downloads\\aioantrongvuonxuan.png
