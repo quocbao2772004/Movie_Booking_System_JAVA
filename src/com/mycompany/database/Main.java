@@ -8,8 +8,6 @@ package com.mycompany.database;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
-import java.util.List;
 import javax.swing.*;
 public class Main {
     public static void showImage(BufferedImage image) {
@@ -38,14 +36,14 @@ public class Main {
 
 
         
-        MovieDatabase movieDb = new MovieDatabase();
-        movieDb.addMovie("1", "Inception", Arrays.asList("Cinema 1", "Cinema 2"), Arrays.asList("2023-10-01", "2023-10-02"), "Sci-Fi", "path/to/image", "Christopher Nolan", "A mind-bending thriller", 148, "2010-07-16", "Leonardo DiCaprio, Joseph Gordon-Levitt");
-        movieDb.updateMovie("1", "Inception", Arrays.asList("Cinema 1", "Cinema 2", "Cinema 3"), Arrays.asList("2023-10-01", "2023-10-02", "2023-10-03"), "Sci-Fi", "path/to/image", "Christopher Nolan", "A mind-bending thriller", 148, "2010-07-16", "Leonardo DiCaprio, Joseph Gordon-Levitt");
-        movieDb.deleteMovie("1");
-        List<Movie> movies = movieDb.getAllMovies();
-        for (Movie movie : movies) {
-            System.out.println(movie.getTitle());
-        }
+        // MovieDatabase movieDb = new MovieDatabase();
+        // movieDb.addMovie("1", "Inception", Arrays.asList("Cinema 1", "Cinema 2"), Arrays.asList("2023-10-01", "2023-10-02"), "Sci-Fi", "path/to/image", "Christopher Nolan", "A mind-bending thriller", 148, "2010-07-16", "Leonardo DiCaprio, Joseph Gordon-Levitt");
+        // movieDb.updateMovie("1", "Inception", Arrays.asList("Cinema 1", "Cinema 2", "Cinema 3"), Arrays.asList("2023-10-01", "2023-10-02", "2023-10-03"), "Sci-Fi", "path/to/image", "Christopher Nolan", "A mind-bending thriller", 148, "2010-07-16", "Leonardo DiCaprio, Joseph Gordon-Levitt");
+        // movieDb.deleteMovie("1");
+        // List<Movie> movies = movieDb.getAllMovies();
+        // for (Movie movie : movies) {
+        //     System.out.println(movie.getTitle());
+        // }
 
 
         // AccountManager accountManager = new AccountManager();
@@ -74,6 +72,16 @@ public class Main {
         //     System.out.println(seat.getSeat() + " - " + seat.getStatus());
         // }
 
-        
+        FeedbackDatabase feedbackDb = new FeedbackDatabase();
+        // feedbackDb.addFeedback("user1", "Cinema 1", "Good movie", "positive");
+        // feedbackDb.addFeedback("user2", "Cinema 1", "Bad movie", "negative");
+        // feedbackDb.addFeedback("user3", "Cinema 1", "Average movie", "neutral");
+
+        for (Feedback feedback : feedbackDb.getFeedbacks("Cinema 1")) {
+            System.out.println(feedback.getUser() + " - " + feedback.getFeedback() + " - " + feedback.getStatus());
+        }
+
+
+
     }
 }
