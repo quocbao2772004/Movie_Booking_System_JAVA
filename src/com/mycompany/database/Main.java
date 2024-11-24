@@ -61,6 +61,12 @@ public class Main {
         // BufferedImage image = Utils.getQR(10000, "dmhung1508");
         // showImage(image);
 
+        // check thanh toán
+        System.out.println(Utils.checkTicketExists("DINH MANH HUNG"));
+
+        //send email
+        System.out.println(Utils.sendEmail("DINH MANH HUNG", "dmhung1508", "hung1234", "15:30", "Rạp 22, ghế G10, G11", "admin@hacker2k4.com"));
+
         // SeatsDatabase seatsDb = new SeatsDatabase();
         // seatsDb.addSeats("Cinema 1");
         // seatsDb.updateSeatStatus("Cinema 1", "G01");
@@ -72,14 +78,14 @@ public class Main {
         //     System.out.println(seat.getSeat() + " - " + seat.getStatus());
         // }
 
-        FeedbackDatabase feedbackDb = new FeedbackDatabase();
-        // feedbackDb.addFeedback("user1", "Cinema 1", "Good movie", "positive");
-        // feedbackDb.addFeedback("user2", "Cinema 1", "Bad movie", "negative");
-        // feedbackDb.addFeedback("user3", "Cinema 1", "Average movie", "neutral");
+        // FeedbackDatabase feedbackDb = new FeedbackDatabase();
+        // // feedbackDb.addFeedback("user1", "Cinema 1", "Good movie", "positive");
+        // // feedbackDb.addFeedback("user2", "Cinema 1", "Bad movie", "negative");
+        // // feedbackDb.addFeedback("user3", "Cinema 1", "Average movie", "neutral");
 
-        for (Feedback feedback : feedbackDb.getFeedbacks("Cinema 1")) {
-            System.out.println(feedback.getUser() + " - " + feedback.getFeedback() + " - " + feedback.getStatus());
-        }
+        // for (Feedback feedback : feedbackDb.getFeedbacks("Cinema 1")) {
+        //     System.out.println(feedback.getUser() + " - " + feedback.getFeedback() + " - " + feedback.getStatus());
+        // }
 
 
 
