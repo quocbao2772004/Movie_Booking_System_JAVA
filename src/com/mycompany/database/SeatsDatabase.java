@@ -1,4 +1,6 @@
+
 package com.mycompany.database;
+import com.mycompany.movie.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;

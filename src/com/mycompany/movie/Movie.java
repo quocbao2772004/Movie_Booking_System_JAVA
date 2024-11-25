@@ -1,81 +1,120 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package termproject.src.com.mycompany.movie;
+package com.mycompany.movie;
 
-/**
- *
- * @author muham
- */
-public class Movie { // superclass
-    protected String cinema;
-    protected String movieName;
-    protected String movieDate;
-    protected String movieTime;
-    protected String hall;
-    protected String seat;
-    protected String price;
-    
-    // default constructor
-    
-    public Movie() {
-    
-        cinema = "";
-        movieName = "";
-        movieDate = "";
-        movieTime = "";
-        hall = "";
-        seat = "";
-        price = "";
+import java.util.List;
+
+public class Movie {
+    private String id;
+    private String title;
+    private List<String> cinemas;
+    private List<String> showDates;
+    private String genre;
+    private String imagePath;
+    private String director;
+    private String description;
+    private int duration;
+    private String releaseDate;
+    private String mainActors;
+
+    public Movie(String id, String title, List<String> cinemas, List<String> showDates, String genre, String imagePath, String director, String description, int duration, String releaseDate, String mainActors) {
+        this.id = id;
+        this.title = title;
+        this.cinemas = cinemas;
+        this.showDates = showDates;
+        this.genre = genre;
+        this.imagePath = imagePath;
+        this.director = director;
+        this.description = description;
+        this.duration = duration;
+        this.releaseDate = releaseDate;
+        this.mainActors = mainActors;
     }
-    
-    // mutator
-    
-    public void setCinema(String c) {
-        cinema = c;
+
+    // Getters and setters for each field
+    public String getId() {
+        return id;
     }
-    public void setMovieName(String mn) {
-        movieName = mn;
+
+    public void setId(String id) {
+        this.id = id;
     }
-    public void setMovieDate(String d) {
-        movieDate = d;
+
+    public String getTitle() {
+        return title;
     }
-    public void setMovieTime(String mt) {
-        movieTime = mt;
+
+    public void setTitle(String title) {
+        this.title = title;
     }
-    public void setHall(String h) {
-        hall = h;
+
+    public List<String> getCinemas() {
+        return cinemas;
     }
-    public void setSeat(String s) {
-        seat = s;
+
+    public void setCinemas(List<String> cinemas) {
+        this.cinemas = cinemas;
     }
-    public void setPrice(String p) {
-        price = p;
+
+    public List<String> getShowDates() {
+        return showDates;
     }
-    
-    // accessor
-    
-    public String getCinema() {
-        return cinema;
+
+    public void setShowDates(List<String> showDates) {
+        this.showDates = showDates;
     }
-    public String getMovieName() {
-        return movieName;
+
+    public String getGenre() {
+        return genre;
     }
-    public String getMovieDate() {
-        return movieDate;
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
-    public String getMovieTime() {
-        return movieTime;
+
+    public String getImagePath() {
+        return imagePath;
     }
-    public String getHall() {
-        return hall;
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
-    public String getSeat() {
-        return seat;
+
+    public String getDirector() {
+        return director;
     }
-    public String getPrice() {
-        return price;
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getMainActors() {
+        return mainActors;
+    }
+
+    public void setMainActors(String mainActors) {
+        this.mainActors = mainActors;
     }
 }

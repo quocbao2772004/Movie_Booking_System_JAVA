@@ -1,6 +1,7 @@
-package com.mycompany.database;
 
-import java.util.List;
+package com.mycompany.movie;
+import java.io.*;
+import java.util.*;
 
 public class Cinema {
     private String name;
@@ -28,3 +29,4 @@ public class Cinema {
         this.showHours = showHours;
     }
 }
+
