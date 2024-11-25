@@ -39,7 +39,7 @@ public class AccountManager {
         Document account = new Document("username", username)
                             .append("password", password)
                             .append("email", email)
-                            .append("role", "admin");
+                            .append("role", "user");
         collection.insertOne(account);
         System.out.println("Account created: " + username);
         return true;
