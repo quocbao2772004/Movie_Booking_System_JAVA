@@ -31,18 +31,35 @@ public class AccountManager {
     //     collection.insertOne(accountDoc);
     //     System.out.println("Account created: " + account.getUsername());
     // }
-    public void createAccount(String username, String password, String email) {
+    public boolean createAccount(String username, String password, String email) {
+        if (check_exit(username)) {
+            System.out.println("Account existed: " + username);
+            return false;
+        }
         Document account = new Document("username", username)
                             .append("password", password)
-                            .append("email", email);
+                            .append("email", email)
+                            .append("role", "admin");
         collection.insertOne(account);
         System.out.println("Account created: " + username);
+        return true;
     }
 
     public void deleteAccount(String username) {
         Document query = new Document("username", username);
         collection.deleteOne(query);
         System.out.println("Account deleted: " + username);
+    }
+
+    public boolean check_exit(String username) {
+        Document query = new Document("username", username);
+        Document account = collection.find(query).first();
+        if (account == null) {
+            System.out.println("Account not found: " + username);
+            return false;
+        } else {
+            return true;
+        }
     }
 
 

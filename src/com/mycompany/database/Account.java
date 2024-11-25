@@ -4,11 +4,13 @@ public class Account {
     private String username;
     private String password;
     private String email;
+    private String role;
 
-    public Account(String username, String password, String email) {
+    public Account(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.role = role;
     }
 
     public String getUsername() {
@@ -22,4 +24,10 @@ public class Account {
     public String getEmail() {
         return email;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    
 }

@@ -2,7 +2,6 @@ package com.mycompany.database;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -153,11 +152,17 @@ public class ModernMovieManagementApp extends JFrame {
                     JTextField statusField = (JTextField) inputPanel.getComponent(9);
 
                     movieDatabase.addMovie(
+                            "1", // Assuming ID is auto-generated or managed elsewhere
                             titleField.getText(),
+                            List.of(), // Cinemas
+                            List.of(), // Show Dates
                             genreField.getText(),
+                            "", // Image Path
+                            "", // Director
+                            "", // Description
                             Integer.parseInt(durationField.getText()),
                             releaseDateField.getText(),
-                            statusField.getText()
+                            "" // Main Actors
                     );
                     refreshMovieTable();
                     dialog.dispose();
@@ -207,11 +212,17 @@ public class ModernMovieManagementApp extends JFrame {
             if (areMovieFieldsValid(inputPanel)) {
                 try {
                     movieDatabase.updateMovie(
+                            "1", // Assuming ID is auto-generated or managed elsewhere
                             titleField.getText(),
+                            List.of(), // Cinemas
+                            List.of(), // Show Dates
                             genreField.getText(),
+                            "", // Image Path
+                            "", // Director
+                            "", // Description
                             Integer.parseInt(durationField.getText()),
                             releaseDateField.getText(),
-                            statusField.getText()
+                            "" // Main Actors
                     );
                     refreshMovieTable();
                     dialog.dispose();
@@ -241,7 +252,7 @@ public class ModernMovieManagementApp extends JFrame {
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the movie: " + movieTitle + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             try {
-                movieDatabase.deleteMovie(movieTitle);
+                movieDatabase.deleteMovie("1"); // Assuming ID is auto-generated or managed elsewhere
                 refreshMovieTable();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error deleting movie: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -280,7 +291,7 @@ public class ModernMovieManagementApp extends JFrame {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBackground(BACKGROUND_COLOR);
 
-        accountTable = createStyledTable(new String[]{"Username", "Password"});
+        accountTable = createStyledTable(new String[]{"Username", "Email"});
         JScrollPane scrollPane = new JScrollPane(accountTable);
         scrollPane.getViewport().setBackground(Color.WHITE);
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -348,10 +359,12 @@ public class ModernMovieManagementApp extends JFrame {
                 try {
                     JTextField usernameField = (JTextField) inputPanel.getComponent(1);
                     JPasswordField passwordField = (JPasswordField) inputPanel.getComponent(3);
+                    JTextField emailField = (JTextField) inputPanel.getComponent(5);
 
                     accountManager.createAccount(
                             usernameField.getText(),
-                            new String(passwordField.getPassword())
+                            new String(passwordField.getPassword()),
+                            emailField.getText()
                     );
                     refreshAccountTable();
                     dialog.dispose();
@@ -386,9 +399,10 @@ public class ModernMovieManagementApp extends JFrame {
 
         JTextField usernameField = (JTextField) inputPanel.getComponent(1);
         JPasswordField passwordField = (JPasswordField) inputPanel.getComponent(3);
+        JTextField emailField = (JTextField) inputPanel.getComponent(5);
 
         usernameField.setText((String) accountTable.getValueAt(selectedRow, 0));
-        passwordField.setText((String) accountTable.getValueAt(selectedRow, 1));
+        emailField.setText(accountManager.getEmail(usernameField.getText()));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton saveButton = createStyledButton("Save", e -> {
@@ -397,7 +411,8 @@ public class ModernMovieManagementApp extends JFrame {
                     accountManager.deleteAccount(usernameField.getText());
                     accountManager.createAccount(
                             usernameField.getText(),
-                            new String(passwordField.getPassword())
+                            new String(passwordField.getPassword()),
+                            emailField.getText()
                     );
                     refreshAccountTable();
                     dialog.dispose();
@@ -441,9 +456,10 @@ public class ModernMovieManagementApp extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        String[] labels = {"Username:", "Password:"};
+        String[] labels = {"Username:", "Password:", "Email:"};
         JTextField usernameField = new JTextField(20);
         JPasswordField passwordField = new JPasswordField(20);
+        JTextField emailField = new JTextField(20);
 
         for (int i = 0; i < labels.length; i++) {
             gbc.gridx = 0;
@@ -457,8 +473,10 @@ public class ModernMovieManagementApp extends JFrame {
             gbc.fill = GridBagConstraints.HORIZONTAL;
             if (i == 0) {
                 panel.add(usernameField, gbc);
-            } else {
+            } else if (i == 1) {
                 panel.add(passwordField, gbc);
+            } else {
+                panel.add(emailField, gbc);
             }
         }
 
@@ -573,7 +591,7 @@ public class ModernMovieManagementApp extends JFrame {
         for (Document account : accounts) {
             model.addRow(new Object[]{
                     account.getString("username"),
-                    account.getString("password")
+                    account.getString("email")
             });
         }
     }
@@ -603,8 +621,9 @@ public class ModernMovieManagementApp extends JFrame {
     private boolean areAccountFieldsValid(JPanel panel) {
         JTextField usernameField = (JTextField) panel.getComponent(1);
         JPasswordField passwordField = (JPasswordField) panel.getComponent(3);
+        JTextField emailField = (JTextField) panel.getComponent(5);
 
-        if (usernameField.getText().isEmpty() || passwordField.getPassword().length == 0) {
+        if (usernameField.getText().isEmpty() || passwordField.getPassword().length == 0 || emailField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(panel, "All fields must be filled out.", "Input Error", JOptionPane.WARNING_MESSAGE);
             return false;
         }

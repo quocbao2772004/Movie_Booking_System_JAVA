@@ -46,11 +46,11 @@ public class Main {
         // }
 
 
-        // AccountManager accountManager = new AccountManager();
-        // accountManager.createAccount("dmhung1508", "hung1234", "admin@hacker2k4.com");
-        // System.out.println(accountManager.check_correct("dmhung1508", "hung12334"));
-        // System.out.println(accountManager.getEmail("dmhung1508"));
-        //accountManager.deleteAccount("user1");
+        AccountManager accountManager = new AccountManager();
+        accountManager.createAccount("dmhung1508", "hung1234", "admin@hacker2k4.com");
+        System.out.println(accountManager.check_correct("dmhung1508", "hung12334"));
+        System.out.println(accountManager.getEmail("dmhung1508"));
+        accountManager.deleteAccount("user1");
 
         // TransactionHistory history = new TransactionHistory();
         // history.generateFakeTransactions(10);
@@ -61,11 +61,11 @@ public class Main {
         // BufferedImage image = Utils.getQR(10000, "dmhung1508");
         // showImage(image);
 
-        // check thanh toán
-        System.out.println(Utils.checkTicketExists("DINH MANH HUNG"));
+        // // check thanh toán
+        // System.out.println(Utils.checkTicketExists("DINH MANH HUNG"));
 
-        //send email
-        System.out.println(Utils.sendEmail("DINH MANH HUNG", "dmhung1508", "hung1234", "15:30", "Rạp 22, ghế G10, G11", "admin@hacker2k4.com"));
+        // //send email
+        // System.out.println(Utils.sendEmail("DINH MANH HUNG", "dmhung1508", "hung1234", "15:30", "Rạp 22, ghế G10, G11", "admin@hacker2k4.com"));
 
         // SeatsDatabase seatsDb = new SeatsDatabase();
         // seatsDb.addSeats("Cinema 1");
