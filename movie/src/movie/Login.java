@@ -1,15 +1,14 @@
-
 package movie;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static movie.RegisterPage.Register;
+
 public class Login 
 {
     public static ArrayList<String> save_username = new ArrayList<>();
@@ -30,58 +29,6 @@ public class Login
         leftPanel.add(imageLabel);
         leftPanel.setBackground(Color.decode("#CCCCCC"));
         return leftPanel;
-    }
-    public static boolean check_information(String username, String password) throws FileNotFoundException, IOException 
-    {
-        boolean ok = false;
-        username = username.trim();
-        int count = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\PC\\Desktop\\B22DCVT050\\movie_ticket\\src\\movie_ticket\\information.txt"))) 
-        {
-            String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                String[] sets = line.split("\\s+");
-                if (sets[0].equals("Username:")) 
-                {
-                    count+=1;
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 1; i < sets.length; i++) 
-                    {
-                        sb.append(sets[i]);
-                        sb.append(" ");
-                    }
-                    String usrn2 = sb.toString().trim();
-                    save_username.add(usrn2);
-                }
-                else if (sets[0].equals("Password:")) 
-                {
-                    count+=1;
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 1; i < sets.length; i++) 
-                    {
-                        sb.append(sets[i]);
-                        sb.append(" ");
-                    }
-                    String pw = sb.toString().trim();
-                    save_password.add(pw);
-                }
-            }
-            for(int i = 0;i<=save_username.size()-1;i++)
-            {
-                if(save_username.get(i).equals(username) && save_password.get(i).equals(password))
-                {
-                    
-                    ok = true;
-                    break;
-                }
-            }
-        }   
-        catch (IOException e) 
-        {
-            System.out.println("Error reading the file: " + e.getMessage());
-        }
-            return ok; 
     }
     public static JPanel Design_RightPanel(JFrame myFrame)
     {
@@ -128,10 +75,11 @@ public class Login
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AccountManager am = new AccountManager();
                 String get_username = text_username.getText();
                 String get_Password = text_Password.getText();
                 try {
-                    if(check_information(get_username, get_Password))
+                    if(am.check_correct(get_username, get_Password))
                     {
                         JOptionPane.showMessageDialog(myFrame, "Login successfully!");
                         myFrame.dispose();
@@ -181,8 +129,6 @@ public class Login
         myFrame.setSize(1150, 750);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLayout(null);
-        
-        
         myFrame.add(Design_leftPanel());
         myFrame.add(Design_RightPanel(myFrame));
         myFrame.setVisible(true);

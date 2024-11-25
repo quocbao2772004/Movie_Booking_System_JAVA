@@ -9,15 +9,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static movie.Login.Login_Interface;
+import static movie.process_functions.*;
 public class RegisterPage 
 {
-    public static ArrayList<String> save_username = new ArrayList<>();
-    public static boolean check_is_valid(String s)
-    {
-        if(s.trim().length()<1) return false;
-        return true;
-    }
-//    public static ArrayList<String> save_password = new ArrayList<>();
     public static JPanel Design_leftPanel()
     {
         JPanel leftPanel = new JPanel();
@@ -35,46 +29,7 @@ public class RegisterPage
         leftPanel.setBackground(Color.decode("#CCCCCC"));
         return leftPanel;
     }
-    public static boolean check_information(String username) throws FileNotFoundException, IOException 
-    {
-        boolean ok = true;
-        username = username.trim();
-        int count = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\PC\\Desktop\\B22DCVT050\\movie_ticket\\src\\movie_ticket\\information.txt"))) 
-        {
-            String line;
-            while ((line = reader.readLine()) != null) 
-            {
-                String[] sets = line.split("\\s+");
-                if (sets[0].equals("Username:")) 
-                {
-                    count+=1;
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 1; i < sets.length; i++) 
-                    {
-                        sb.append(sets[i]);
-                        sb.append(" ");
-                    }
-                    String usrn2 = sb.toString().trim();
-                    save_username.add(usrn2);
-                }
-                
-            }
-            for(int i = 0;i<=save_username.size()-1;i++)
-            {
-                if(save_username.get(i).equals(username))
-                {
-                    ok = false;
-                    break;
-                }
-            }
-        }   
-        catch (IOException e) 
-        {
-            System.out.println("Error reading the file: " + e.getMessage());
-        }
-            return ok; 
-    }
+    
     public static JPanel Design_RightPanel(JFrame myFrame)
     {
         JPanel rightPanel = new JPanel();
@@ -116,40 +71,28 @@ public class RegisterPage
         
         SignUpButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String get_username = text_username.getText();
-                String get_email = text_email.getText();
-                String get_Password = text_Password.getText();
-                try {
-                    if(check_is_valid(get_username) && check_is_valid(get_email) && check_is_valid(get_Password))
+            public void actionPerformed(ActionEvent e) 
+            {
+                Account new_account = new Account(text_username.getText(), text_email.getText(), text_Password.getText());
+                if(check_is_valid(new_account.getUsername())
+                        && check_is_valid(new_account.getEmail())
+                        && check_is_valid(new_account.getPassword()))
+                {
+                    AccountManager am = new AccountManager();
+                    if(!am.check_exit(new_account.getUsername()))
                     {
-                            if(check_information(get_username))
-                        {
-    //                        JOptionPane.showMessageDialog(myFrame, "Sign up successfully!");
-                            try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\PC\\Desktop\\B22DCVT050\\movie_ticket\\src\\movie_ticket\\information.txt", true))) {
-                                writer.write("Username: " + get_username);
-                                writer.newLine();
-                                writer.write("Email: " + get_email);
-                                writer.newLine();
-                                writer.write("Password: " + get_Password);
-                                writer.newLine();
-                                JOptionPane.showMessageDialog(myFrame, "Registration Successful!");
-                            } catch (IOException ex) {
-                                JOptionPane.showMessageDialog(myFrame, "Error saving information.");
-                            }
-                        }
-                        else
-                        {
-                            JOptionPane.showMessageDialog(myFrame,"Username is already taken!");
-                        }
+                        am.createAccount(new_account.getUsername(), new_account.getPassword(), new_account.getEmail());
+                        JOptionPane.showMessageDialog(myFrame, "Registration Successful!");
+                        
                     }
                     else
                     {
-                         JOptionPane.showMessageDialog(myFrame,"Your information is invalid!");
+                        JOptionPane.showMessageDialog(myFrame,"Username is already taken!");
                     }
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(Movie.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(myFrame,"Your information is invalid!");
                 }
                 
             }
@@ -187,8 +130,6 @@ public class RegisterPage
         myFrame.setSize(1150, 750);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLayout(null);
-        
-        
         myFrame.add(Design_leftPanel());
         myFrame.add(Design_RightPanel(myFrame));
         myFrame.setVisible(true);

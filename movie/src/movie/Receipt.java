@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
-import static movie.Init.arl_movie;
+import static movie.process_functions.*;
 public class Receipt 
 {
     public static JFrame myFrame = new JFrame("Movie Ticket System");
@@ -22,23 +22,24 @@ public class Receipt
     public static ArrayList <JButton> save_buyButton = new ArrayList<>();
     public static Map<JButton, String> buttonToCinemaMap = new LinkedHashMap<>();
     public static ArrayList<String> selectedCinema = new ArrayList<>();
-    public static void getReceipt(String x, String name, String usrn)
+    public static void getReceipt(Movie moviee, String usrn)
     {
         myFrame = new JFrame("Movie Ticket System");
         myFrame.setSize(1150, 750);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLayout(null);
 
-        myFrame.add(left_Panel(myFrame, usrn));
-        myFrame.add(right_Panel(x, name, usrn));
+        myFrame.add(left_Panel(moviee, myFrame, usrn));
+        right_Panel(moviee, usrn);
+//        myFrame.add(right_Panel(moviee, usrn));
         myFrame.setVisible(true);
     }
-    public static JPanel left_Panel(JFrame myFrame, String usrn)
+    public static JPanel left_Panel(Movie moviee, JFrame myFrame, String usrn)
     {
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(null);
         leftPanel.setBounds(0,0,165, 750);
-        
+        // anh user
         JPanel sub0 = new JPanel();
         sub0.setLayout(null);
         sub0.setBounds(0, 30, 150, 200);
@@ -55,7 +56,7 @@ public class Receipt
         sub0.setBackground(Color.decode("#CCCCCC"));
         leftPanel.add(sub0);
         
-        
+        // Bound Menu
         JPanel sub1 = new JPanel();
         sub1.setLayout(null);
         sub1.setBounds(0, 150, 150, 500);
@@ -78,7 +79,7 @@ public class Receipt
             }
             
         });
-        // Feedback Button
+        // FeedbackUI Button
         JButton sendFeedback = new JButton("Send Feedback");
         sendFeedback.setBounds(5, 160, 160, 30);
         sendFeedback.setFont(new Font("Arial", Font.BOLD, 14));
@@ -88,7 +89,7 @@ public class Receipt
             @Override
             public void actionPerformed(ActionEvent e) {
                 
-                movie.Feedback.SendFeedBack();
+                movie.FeedbackUI.SendFeedBack(myFrame, moviee, usrn);
             }
             
         });
@@ -114,24 +115,12 @@ public class Receipt
         leftPanel.setBackground(Color.decode("#CCCCCC"));
         return leftPanel;
     }
-    public static JLabel function_day(String day, int x, int y, int w, int h)
+    
+    
+    public static void right_Panel(Movie moviee, String usrn)
     {
-        JLabel today = new JLabel(day);
-        today.setForeground(Color.WHITE);
-        today.setFont(new Font("Arial", Font.BOLD, 16));
-        today.setBounds(x, y, w, h);
-        return today;
-    }
-    public static JButton function_date(String date, int x, int y, int w, int h)
-    {
-        JButton day1 = new JButton(date);
-        day1.setBounds(x, y, w, h);
-        day1.setFont(new Font("Arial", Font.BOLD, 12));
-        day1.setBackground(Color.WHITE);
-        return day1;
-    }
-    public static JPanel right_Panel(String x, String name, String usrn)
-    {
+        CinemaManager cm = new CinemaManager();
+        ArrayList<Cinema> arl_cinema = new ArrayList<>(cm.getAllCinemas());
         
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(null);
@@ -143,8 +132,8 @@ public class Receipt
         lPanel.setBounds(0, 0, 300, 750);
         lPanel.setBackground(Color.BLACK);
         // Lấy ảnh và tên của phim đã chọn
-        lPanel.add(Menu.processing_image(x, 10, 20, 150, 200));
-        lPanel.add(Menu.processing_name(name, 680, 190, 180, 50));
+        lPanel.add(processing_image(moviee.getImagePath(), 10, 20, 150, 200));
+        lPanel.add(processing_label(moviee.getTitle(), 680, 190, 180, 50));
         rightPanel.add(lPanel);
         
         rPanel.setBounds(301, 0, 700, 750);
@@ -155,124 +144,52 @@ public class Receipt
         sub0.setLayout(null);
         sub0.setBounds(0, 0, 700, 150);
         sub0.setBackground(Color.BLACK);
-        String[] day1 = arl_movie.get(0).getMovieDateList().get(0).split("\\s+");
-        String[] day2 = arl_movie.get(0).getMovieDateList().get(1).split("\\s+");
-        String[] day3 = arl_movie.get(0).getMovieDateList().get(2).split("\\s+");
-        JButton date1 = function_date(day1[1], 10, 50, 50, 30);
-        JButton date2 = function_date(day2[1], 120, 50, 50, 30);
-        JButton date3 = function_date(day3[1], 230, 50, 50, 30);
-        sub0.add(function_day(day1[0], 10, 10, 100, 20));
-        sub0.add(date1);
-        sub0.add(function_day(day2[0], 120, 10, 100, 20));
-        sub0.add(date2);
-        sub0.add(function_day(day3[0], 230, 10, 100, 20));
-        sub0.add(date3);;
-        save_day.add(date1);
-        save_day.add(date2);
-        save_day.add(date3);
-        
-        JPanel line = new JPanel();
-        line.setLayout(null);
-        line.setBounds(10, 120, 650, 1);
-        line.setBackground(Color.GRAY);
-        sub0.add(line);
+        ArrayList<String> dateList = new ArrayList<>(moviee.getShowDates());
+        int x_day = 10 , y_day = 10, w_day = 100 , h_day = 20;
+        int x_date = 10,y_date = 50, w_date = 50, h_date = 30;
+        for(String i: dateList)
+        {
+            String[] day = i.split("\\s+");
+            sub0.add(function_day(day[0], x_day, y_day, w_day, h_day));
+            JButton date = function_date(day[1], x_date, y_date, w_date, h_date);
+            sub0.add(date);
+            save_day.add(date);
+            x_day += 110;
+            x_date += 110;
+        }
+        sub0.add(setLine(10, 120, 650, 1));
         // set location
         JPanel sub1 = new JPanel();
         sub1.setLayout(null);
-        sub1.setBounds(0, 150, 700, 650);
+        sub1.setBounds(0, 130, 700, 650);
         sub1.setBackground(Color.BLACK);
-        JLabel des1 = new JLabel(arl_movie.get(0).getCinemaName(0));
-        JLabel des2 = new JLabel(arl_movie.get(0).getCinemaName(1));
-        JLabel des3 = new JLabel(arl_movie.get(0).getCinemaName(2));
-        des1.setForeground(Color.WHITE);
-        des2.setForeground(Color.WHITE);
-        des3.setForeground(Color.WHITE);
-        des1.setFont(new Font("Arial", Font.BOLD, 16));
-        des2.setFont(new Font("Arial", Font.BOLD, 16));
-        des3.setFont(new Font("Arial", Font.BOLD, 16));
-        JButton time1des1 = new JButton(arl_movie.get(0).getCinemaTime(0, 0));
-        JButton time2des1 = new JButton(arl_movie.get(0).getCinemaTime(0, 1));
-        JButton time3des1 = new JButton(arl_movie.get(0).getCinemaTime(0, 2));
-        time1des1.setFont(new Font("Arial", Font.BOLD, 12));
-        time2des1.setFont(new Font("Arial", Font.BOLD, 12));
-        time3des1.setFont(new Font("Arial", Font.BOLD, 12));
-        time1des1.setBackground(Color.WHITE);
-        time2des1.setBackground(Color.WHITE);
-        time3des1.setBackground(Color.WHITE);
-        JButton time1des2 = new JButton(arl_movie.get(0).getCinemaTime(1, 0));
-        JButton time2des2 = new JButton(arl_movie.get(0).getCinemaTime(1, 1));
-        JButton time3des2 = new JButton(arl_movie.get(0).getCinemaTime(1, 2));
-        time1des2.setFont(new Font("Arial", Font.BOLD, 12));
-        time2des2.setFont(new Font("Arial", Font.BOLD, 12));
-        time3des2.setFont(new Font("Arial", Font.BOLD, 12));
-        time1des2.setBackground(Color.WHITE);
-        time2des2.setBackground(Color.WHITE);
-        time3des2.setBackground(Color.WHITE);
-        JButton time1des3 = new JButton(arl_movie.get(0).getCinemaTime(2, 0));
-        JButton time2des3 = new JButton(arl_movie.get(0).getCinemaTime(2, 1));
-        time1des3.setFont(new Font("Arial", Font.BOLD, 12));
-        time2des3.setFont(new Font("Arial", Font.BOLD, 12));
-        time1des3.setBackground(Color.WHITE);
-        time2des3.setBackground(Color.WHITE);
-        buttonToCinemaMap.put(time1des1, arl_movie.get(0).getCinemaName(0));
-        buttonToCinemaMap.put(time2des1, arl_movie.get(0).getCinemaName(0));
-        buttonToCinemaMap.put(time3des1, arl_movie.get(0).getCinemaName(0));
-
-        buttonToCinemaMap.put(time1des2, arl_movie.get(0).getCinemaName(1));
-        buttonToCinemaMap.put(time2des2, arl_movie.get(0).getCinemaName(1));
-        buttonToCinemaMap.put(time3des2, arl_movie.get(0).getCinemaName(1));
-
-        buttonToCinemaMap.put(time1des3, arl_movie.get(0).getCinemaName(2));
-        buttonToCinemaMap.put(time2des3, arl_movie.get(0).getCinemaName(2));
-        save_button.add(time1des1);
-        save_button.add(time2des1);
-        save_button.add(time3des1);
-        save_button.add(time1des2);
-        save_button.add(time2des2);
-        save_button.add(time3des2);
-        save_button.add(time1des3);
-        save_button.add(time2des3);
-        //des1
-        des1.setBounds(10, 10, 300, 30);
-        time1des1.setBounds(10, 50, 100, 50);
-        time2des1.setBounds(130, 50, 100, 50);
-        time3des1.setBounds(250, 50, 100, 50);
-        //des2
-        des2.setBounds(10, 150, 300, 30);
-        time1des2.setBounds(10, 200, 100, 50);
-        time2des2.setBounds(130, 200, 100, 50);
-        time3des2.setBounds(250, 200, 100, 50);
-        //des3
-        des3.setBounds(10, 320, 300, 30);
-        time1des3.setBounds(10, 370, 100, 50);
-        time2des3.setBounds(130, 370, 100, 50);
+        ArrayList<String> cname = new ArrayList<>(moviee.getCinemas());
         
-        sub1.add(des1);
-        sub1.add(time1des1);
-        sub1.add(time2des1);
-        sub1.add(time3des1);
-        JPanel line1 = new JPanel();
-        line1.setLayout(null);
-        line1.setBackground(Color.GRAY);
-        line1.setBounds(10, 140, 650, 1);
-        sub1.add(line1);
-        sub1.add(des2);
-        sub1.add(time1des2);
-        sub1.add(time2des2);
-        sub1.add(time3des2);
-        JPanel line2 = new JPanel();
-        line2.setLayout(null);
-        line2.setBackground(Color.GRAY);
-        line2.setBounds(10, 300, 650, 1);
-        sub1.add(line2);
-        sub1.add(des3);
-        sub1.add(time1des3);
-        sub1.add(time2des3);
-        JPanel line3 = new JPanel();
-        line3.setLayout(null);
-        line3.setBackground(Color.GRAY);
-        line3.setBounds(10, 460, 650, 1);
-        sub1.add(line3);
+        int x_des = 10, y_des = 10, w_des = 300, h_des = 30;
+        for(String i: cname)
+        {
+            sub1.add(function_day(i, x_des, y_des, w_des, h_des));
+            y_des += 140;
+        }
+        
+        int x_time = 10, y_time = 50, w_time = 100, h_time = 50;
+        int y_line = 140;
+        for(Cinema i: arl_cinema)
+        {
+            x_time = 10;
+            for(String j: i.getShowHours())
+            {
+                JButton time = setButtonTime(j, x_time, y_time, w_time, h_time);
+                sub1.add(time);
+                save_button.add(time);
+                buttonToCinemaMap.put(time, i.getName());
+                x_time += 120;
+            }
+            sub1.add(setLine(10, y_line, 650, 1));
+            y_line += 140;
+            y_time += 150;
+        }
+        
         JButton selectButton = new JButton("Select");
         selectButton.setBounds(250, 500, 100, 30);
         selectButton.setBackground(Color.YELLOW);
@@ -280,14 +197,14 @@ public class Receipt
         selectButton.setVisible(false);
         selectButton.addActionListener(new ActionListener() 
             {
-                final String name1 = name;
+                final String name1 = moviee.getTitle();
                 final String usrn1 = usrn;
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
                     
                     myFrame.dispose();
-                    movie.Seat.chooseSeat(name1, usrn1);
+                    movie.SeatUI.chooseSeat(moviee, name1, usrn1);
                 }
             });
         sub1.add(selectButton);
@@ -319,6 +236,7 @@ public class Receipt
                 btn.setBackground(Color.YELLOW);
                 save_choosen_time.add(btn.getText());
                 selectedCinema.add(buttonToCinemaMap.get(btn));
+                System.out.println(buttonToCinemaMap.get(btn));
                 checkAndShowNewButton.run();
             });
         }
@@ -329,19 +247,17 @@ public class Receipt
                 for (JButton b : save_day) {
                     b.setBackground(Color.WHITE);
                     save_choosen_day.remove(b.getText());
-                    selectedCinema.remove(buttonToCinemaMap.get(b));
+                    
                 }
                 btn.setBackground(Color.YELLOW);
                 save_choosen_day.add(btn.getText());
-                selectedCinema.add(buttonToCinemaMap.get(btn));
+                
                 checkAndShowNewButton.run();
             });
         }
 
-
-        
-        
-        return rightPanel;
+        myFrame.add(rightPanel);
+//        return rightPanel;
     }
     
 }

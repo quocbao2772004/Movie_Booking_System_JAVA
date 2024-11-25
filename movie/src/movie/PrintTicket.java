@@ -29,7 +29,7 @@ public class PrintTicket
     {
         boolean checkH = false;
         boolean checkG = false;
-        for(String i: Seat.save_seat)
+        for(String i: SeatUI.save_seat)
         {
             if(i.charAt(0) == 'H') checkH = true;
             else if(i.charAt(0) == 'G') checkG = true;
@@ -56,7 +56,7 @@ public class PrintTicket
         frame.add(name_ticket);
         myTicket.setBackground(Color.decode("#DDDDDD"));
         myTicket.add(frame);
-        
+        // in cho ngoi
         JPanel p2 = new JPanel();
         p2.setLayout(null);
         p2.setBounds(0,81,300, 350);
@@ -65,16 +65,16 @@ public class PrintTicket
         inf1.setLayout(null);
         inf1.setBounds(10, 22, 30, 30);
         inf1.setFont(new Font("Arial", Font.PLAIN, 12));
-        String seats = String.join(", ", Seat.save_seat);
+        String seats = String.join(", ", SeatUI.save_seat);
         JLabel content_inf1 = new JLabel(seats);
         content_inf1.setLayout(null);
         content_inf1.setBounds(10, 40, 300, 30);
         content_inf1.setFont(new Font("Arial", Font.BOLD, 12));
         p2.add(inf1);
         p2.add(content_inf1);
-        
-        int quantity = Seat.save_seat.size();
-        TicketPrice newTicket = new TicketPrice(quantity, 100000);
+        // in gia
+        int quantity = SeatUI.save_seat.size();
+        TicketPrice newTicket = new TicketPrice(quantity, 50000);
         JLabel inf2 = new JLabel("Price");
         inf2.setLayout(null);
         inf2.setBounds(10, 75, 30, 30);
@@ -85,20 +85,19 @@ public class PrintTicket
         content_inf2.setFont(new Font("Arial", Font.BOLD, 12));
         p2.add(inf2);
         p2.add(content_inf2);
-        
+        // in ngay xem
         JLabel inf3 = new JLabel("Date");
         inf3.setLayout(null);
         inf3.setBounds(130, 75, 30, 30);
         inf3.setFont(new Font("Arial", Font.PLAIN, 12));
         String date = Receipt.save_choosen_day.get(0) + "/12/2024";
-        
         JLabel content_inf3 = new JLabel(date);
         content_inf3.setLayout(null);
         content_inf3.setBounds(115, 93, 100, 30);
         content_inf3.setFont(new Font("Arial", Font.BOLD, 12));
         p2.add(inf3);
         p2.add(content_inf3);
-        
+        // in hang ghe
         JLabel inf4 = new JLabel("Hall");
         inf4.setLayout(null);
         inf4.setBounds(250, 75, 30, 30);
@@ -109,7 +108,7 @@ public class PrintTicket
         content_inf4.setFont(new Font("Arial", Font.BOLD, 12));
         p2.add(inf4);
         p2.add(content_inf4);
-        
+        // in rap xem
         JLabel inf5 = new JLabel("Cinema");
         inf5.setLayout(null);
         inf5.setBounds(10, 128, 50, 30);
@@ -122,13 +121,14 @@ public class PrintTicket
                 cinema_name = i;
             }
         }
+        System.out.println(Receipt.selectedCinema.size());
         JLabel content_inf5 = new JLabel(cinema_name);
         content_inf5.setLayout(null);
         content_inf5.setBounds(10, 146, 200, 30);
         content_inf5.setFont(new Font("Arial", Font.BOLD, 12));
         p2.add(inf5);
         p2.add(content_inf5);
-        
+        // in thoi gian bat dau
         JLabel inf6 = new JLabel("Time");
         inf6.setLayout(null);
         inf6.setBounds(240, 128, 50, 30);

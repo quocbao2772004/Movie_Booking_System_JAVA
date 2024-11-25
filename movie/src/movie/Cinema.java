@@ -2,38 +2,31 @@
 package movie;
 import java.io.*;
 import java.util.*;
-public class Cinema 
-{
-    private String id, name;
-    private ArrayList<String> time;
 
-    public Cinema(String id, String name, ArrayList<String> time) {
-        this.id = id;
+public class Cinema {
+    private String name;
+    private List<String> showHours;
+
+    public Cinema(String name, List<String> showHours) {
         this.name = name;
-        this.time = time;
+        this.showHours = showHours;
     }
-    public Cinema(String name, ArrayList<String> time) {
-        
+
+    // Getters and setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.time = time;
     }
-    public String getName()
-    {
-        return this.name;
+
+    public List<String> getShowHours() {
+        return showHours;
     }
-    public String getTime() {
-        
-        StringBuilder sb = new StringBuilder();
-        
-        for(String i: time)
-        {
-            sb.append(i);
-            sb.append("\n");
-        }
-        return sb.deleteCharAt(sb.length()-1).toString();
+
+    public void setShowHours(List<String> showHours) {
+        this.showHours = showHours;
     }
-    public ArrayList<String> getTimeList() {
-        return new ArrayList<>(this.time); 
-    }
-    
 }
+
