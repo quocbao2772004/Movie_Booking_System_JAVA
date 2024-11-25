@@ -113,6 +113,9 @@ public class Movie {
     public String getMainActors() {
         return mainActors;
     }
+    public String getStatus() {
+        return "Available";
+    }
 
     public void setMainActors(String mainActors) {
         this.mainActors = mainActors;

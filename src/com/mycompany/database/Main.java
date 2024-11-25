@@ -47,7 +47,7 @@ public class Main {
 
 
         AccountManager accountManager = new AccountManager();
-        accountManager.createAccount("dmhung1508", "hung1234", "admin@hacker2k4.com");
+        accountManager.createAccount("dmhung1508a", "hung1234", "admin@hacker2k4.com");
         System.out.println(accountManager.check_correct("dmhung1508", "hung12334"));
         System.out.println(accountManager.getEmail("dmhung1508"));
         accountManager.deleteAccount("user1");
