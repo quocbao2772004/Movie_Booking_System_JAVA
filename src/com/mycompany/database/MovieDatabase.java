@@ -1,5 +1,6 @@
-package com.mycompany.database;
 
+package com.mycompany.database;
+import com.mycompany.movie.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -28,6 +29,7 @@ public class MovieDatabase {
                     .append("releaseDate", releaseDate)
                     .append("mainActors", mainActors);
         collection.insertOne(movie);
+//        System.out.println("added Movie");
     }
 
     public void updateMovie(String id, String newTitle, List<String> newCinemas, List<String> newShowDates, String newGenre, String newImagePath, String newDirector, String newDescription, int newDuration, String newReleaseDate, String newMainActors) {
