@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
+
 public class Main {
     public static void showImage(BufferedImage image) {
         if (image != null) {
@@ -46,11 +47,11 @@ public class Main {
         // }
 
 
-        AccountManager accountManager = new AccountManager();
-        accountManager.createAccount("dmhung1508a", "hung1234", "admin@hacker2k4.com");
-        System.out.println(accountManager.check_correct("dmhung1508", "hung12334"));
-        System.out.println(accountManager.getEmail("dmhung1508"));
-        accountManager.deleteAccount("user1");
+        // AccountManager accountManager = new AccountManager();
+        // accountManager.createAccount("dmhung1508a", "hung1234", "admin@hacker2k4.com");
+        // System.out.println(accountManager.check_correct("dmhung1508", "hung12334"));
+        // System.out.println(accountManager.getEmail("dmhung1508"));
+        // accountManager.deleteAccount("user1");
 
         // TransactionHistory history = new TransactionHistory();
         // history.generateFakeTransactions(10);
@@ -78,14 +79,17 @@ public class Main {
         //     System.out.println(seat.getSeat() + " - " + seat.getStatus());
         // }
 
-        // FeedbackDatabase feedbackDb = new FeedbackDatabase();
-        // // feedbackDb.addFeedback("user1", "Cinema 1", "Good movie", "positive");
-        // // feedbackDb.addFeedback("user2", "Cinema 1", "Bad movie", "negative");
-        // // feedbackDb.addFeedback("user3", "Cinema 1", "Average movie", "neutral");
+        FeedbackDatabase feedbackDb = new FeedbackDatabase();
+        // feedbackDb.addFeedback("End game", "user1", "phim như con c", "negative");
+        // feedbackDb.addFeedback("End game", "user2", "phim hay", "positive");
+        // feedbackDb.addFeedback("End game", "user3", "phim hay", "positive");
+        // feedbackDb.addFeedback("End game", "user4", "phim hay", "positive");
+        // feedbackDb.addFeedback("End game", "user5", "phim hay", "positive");
 
-        // for (Feedback feedback : feedbackDb.getFeedbacks("Cinema 1")) {
-        //     System.out.println(feedback.getUser() + " - " + feedback.getFeedback() + " - " + feedback.getStatus());
-        // }
+        // feedbackDb.getFeedbacks("End game");
+        for (Feedback feedback : feedbackDb.getFeedbacks("End game")) {
+            System.out.println(feedback.getUser() + " - " + feedback.getFeedback() + " - " + feedback.getStatus() + " - " + feedback.getMovie());
+        }
 
 
 

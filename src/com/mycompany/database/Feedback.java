@@ -6,7 +6,7 @@ public class Feedback {
     private String feedback;
     private String status;
 
-    public Feedback(String user, String movie, String feedback, String status) {
+    public Feedback(String movie, String user, String feedback, String status) {
         this.user = user;
         this.movie = movie;
         this.feedback = feedback;
